@@ -1,4 +1,4 @@
-# form-builder
+# laravel-form-builder
 
 <p align="center">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT" />
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-PHP表单生成器，快速生成现代化的form表单。包含复选框、单选框、输入框、下拉选择框等元素以及省市区三级联动、时间选择、日期选择、颜色选择、树型、文件/图片上传等功能。
+laravel专用表单生成器，快速生成现代化的form表单。包含复选框、单选框、输入框、下拉选择框等元素以及省市区三级联动、时间选择、日期选择、颜色选择、树型、文件/图片上传等功能。
 </p>
 
 
