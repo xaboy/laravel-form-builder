@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "FormBuilder\\": "./src/"
+            "LaravelFormBuilder\\": "./src/"
         }
     },
     "support": {
@@ -20,7 +20,8 @@
         "source": "https://github.com/xaboy/laravel-form-builder"
     },
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "xaboy/form-builder": "^1.1"
     },
     "minimum-stability": "stable",
     "branch-alias": {
@@ -29,7 +30,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "FormBuilder\\FormBuilderProvider"
+                "LaravelFormBuilder\\FormBuilderProvider"
             ]
         }
     }

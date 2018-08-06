@@ -5,8 +5,9 @@
  * Github: https://github.com/xaboy/form-builder
  */
 
-namespace FormBuilder;
+namespace LaravelFormBuilder;
 
+use FormBuilder\Form;
 use Illuminate\Support\ServiceProvider;
 
 class FormBuilderProvider extends ServiceProvider
