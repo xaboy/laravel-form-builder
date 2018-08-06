@@ -5,11 +5,11 @@
   <a href="https://github.com/xaboy">
     <img src="https://img.shields.io/badge/Author-xaboy-blue.svg" alt="xaboy" />
   </a>
-  <a href="https://packagist.org/packages/xaboy/form-builder">
-    <img src="https://img.shields.io/packagist/v/xaboy/form-builder.svg" alt="version" />
+  <a href="https://packagist.org/packages/xaboy/laravel-form-builder">
+    <img src="https://img.shields.io/packagist/v/xaboy/laravel-form-builder.svg" alt="version" />
   </a>
-  <a href="https://packagist.org/packages/xaboy/form-builder">
-    <img src="https://img.shields.io/packagist/php-v/xaboy/form-builder.svg" alt="php version" />
+  <a href="https://packagist.org/packages/xaboy/laravel-form-builder">
+    <img src="https://img.shields.io/packagist/php-v/xaboy/laravel-form-builder.svg" alt="php version" />
   </a>
 </p>
 
@@ -20,132 +20,17 @@ laravel专用表单生成器，快速生成现代化的form表单。包含复选
 
 #### 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！
  
-#### 本项目还在不断开发完善中,如有建议或问题请[在这里提出](https://github.com/xaboy/form-builder/issues/new)
+#### 本项目还在不断开发完善中,如有建议或问题请[在这里提出](https://github.com/xaboy/laravel-form-builder/issues/new)
 
 
 ## 安装
-`composer require xaboy/form-builder`
+`composer require xaboy/laravel-form-builder`
 
 ## 示例
 
-![https://raw.githubusercontent.com/xaboy/form-builder/master/demo.jpg](https://raw.githubusercontent.com/xaboy/form-builder/master/demo.jpg)
-
-
-### 例子 (TP框架)
-
-#### 版本1 编辑权限
-```php
-$form = Form::create(Url::build('update',array('id'=>$id)),[
-            Form::input('menu_name','按钮名称',$menu['menu_name']),
-            Form::select('pid','父级id',(string)$menu->getData('pid'))->setOptions(function()use($id){
-                $list = (Util::sortListTier(MenusModel::where('id','<>',$id)->select()->toArray(),'顶级','pid','menu_name'));
-                $menus = [['value'=>0,'label'=>'顶级按钮']];
-                foreach ($list as $menu){
-                    $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['menu_name']];
-                }
-                return $menus;
-            })->filterable(1),
-            Form::select('module','模块名',$menu['module'])->options([['label'=>'总后台','value'=>'admin'],['label'=>'总后台1','value'=>'admin1']]),
-            Form::input('controller','控制器名',$menu['controller']),
-            Form::input('action','方法名',$menu['action']),
-            Form::input('params','参数',MenusModel::paramStr($menu['params']))->placeholder('举例:a/123/b/234'),
-            Form::frameInputOne('icon','图标',Url::build('admin/widget.widgets/icon',array('fodder'=>'icon')),$menu['icon'])->icon('ionic'),
-            Form::number('sort','排序',$menu['sort']),
-            Form::radio('is_show','是否菜单',$menu['is_show'])->options([['value'=>0,'label'=>'隐藏'],['value'=>1,'label'=>'显示(菜单只显示三级)']])
-        ]);
-$form->setMethod('post')->setTitle('编辑权限');
-$this->assign(compact('form'));
-return $this->fetch('public/form-builder');
-
-```
-#### 效果
-![https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo02.jpg](https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo02.jpg)
-
-#### 版本2 添加产品
-```php
-$field = [
-    Form::select('cate_id','产品分类')->setOptions(function(){
-        $list = CategoryModel::getTierList();
-        foreach ($list as $menu){
-            $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
-        }
-        return $menus;
-    })->filterable(1)->multiple(1),
-    Form::input('store_name','产品名称')->col(Form::col(8)),
-    Form::input('store_info','产品简介')->type('textarea'),
-    Form::input('keyword','产品关键字')->placeholder('多个用英文状态下的逗号隔开'),
-    Form::input('unit_name','产品单位','件'),
-    Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image')->width('100%')->height('550px'),
-    Form::frameImages('slider_image','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')))->maxLength(5)->icon('images')->width('100%')->height('550px')->spin(0),
-    Form::number('price','产品售价')->min(0)->col(8),
-    Form::number('ot_price','产品市场价')->min(0)->col(8),
-    Form::number('give_integral','赠送积分')->min(0)->precision(0)->col(8),
-    Form::number('postage','邮费')->min(0)->col(Form::col(8)),
-    Form::number('sales','销量')->min(0)->precision(0)->col(8),
-    Form::number('ficti','虚拟销量')->min(0)->precision(0)->col(8),
-    Form::number('stock','库存')->min(0)->precision(0)->col(8),
-    Form::number('cost','产品成本价')->min(0)->col(8),
-    Form::number('sort','排序')->col(8),
-    Form::radio('is_show','产品状态',0)->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-    Form::radio('is_hot','热卖单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_benefit','促销单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_best','精品推荐',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_new','首发新品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_postage','是否包邮',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
-];
-$form = Form::create(Url::build('save'));
-$form->setMethod('post')->setTitle('添加产品')->components($field);
-$this->assign(compact('form'));
-return $this->fetch('public/form-builder');
-
-```
-#### 效果
-![https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo03.jpg](https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo03.jpg)
-
-
-#### 版本3 编辑产品
-```php
-$product = ProductModel::get($id);
-$form = Form::create(Url::build('update',array('id'=>$id)),[
-    Form::select('cate_id','产品分类',explode(',',$product->getData('cate_id')))->setOptions(function(){
-        $list = CategoryModel::getTierList();
-        foreach ($list as $menu){
-            $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
-        }
-        return $menus;
-    })->filterable(1)->multiple(1),
-    Form::input('store_name','产品名称',$product->getData('store_name')),
-    Form::input('store_info','产品简介',$product->getData('store_info'))->type('textarea'),
-    Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
-    Form::input('unit_name','产品单位',$product->getData('unit_name')),
-    Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image')->width('100%')->height('550px'),
-    Form::frameImages('slider_image','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')),json_decode($product->getData('slider_image'),1))->maxLength(5)->icon('images'),
-    Form::number('price','产品售价',$product->getData('price'))->min(0)->precision(2)->col(8),
-    Form::number('ot_price','产品市场价',$product->getData('ot_price'))->min(0)->col(8),
-    Form::number('give_integral','赠送积分',$product->getData('give_integral'))->min(0)->precision(0)->col(8),
-    Form::number('postage','邮费',$product->getData('postage'))->min(0)->col(8),
-    Form::number('sales','销量',$product->getData('sales'))->min(0)->precision(0)->col(8),
-    Form::number('ficti','虚拟销量',$product->getData('ficti'))->min(0)->precision(0)->col(8),
-    Form::number('stock','库存',ProductModel::getStock($id)>0?ProductModel::getStock($id):$product->getData('stock'))->min(0)->precision(0)->col(8),
-    Form::number('cost','产品成本价',$product->getData('cost'))->min(0)->col(8),
-    Form::number('sort','排序',$product->getData('sort'))->col(8),
-    Form::radio('is_show','产品状态',$product->getData('is_show'))->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-    Form::radio('is_hot','热卖单品',$product->getData('is_hot'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_benefit','促销单品',$product->getData('is_benefit'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_best','精品推荐',$product->getData('is_best'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_new','首发新品',$product->getData('is_new'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-    Form::radio('is_postage','是否包邮',$product->getData('is_postage'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
-]);
-$form->setMethod('post')->setTitle('编辑产品');
-$this->assign(compact('form'));
-return $this->fetch('public/form-builder');
-```
-#### 效果
-![https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo04.jpg](https://raw.githubusercontent.com/xaboy/form-builder/master/images/demo04.jpg)
-
+![https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg](https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg)
 
 **当form提交成功后会调用`window.formCreate.formSuccess(res,$f,formData)`作为回调方法**
-
 
 ## 代码
 ```php
