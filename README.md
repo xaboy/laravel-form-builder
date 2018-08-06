@@ -26,6 +26,12 @@ laravel专用表单生成器，快速生成现代化的form表单。包含复选
 ## 安装
 `composer require xaboy/laravel-form-builder`
 
+## 配置
+1. 添加下面一行到 config/app.php 中 providers 部分：
+`LaravelFormBuilder\FormBuilderProvider::class,`
+1. 发布配置文件与资源
+`$ php artisan vendor:publish --provider='LaravelFormBuilder\FormBuilderProvider'`
+
 ## 示例
 
 ![https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg](https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg)
