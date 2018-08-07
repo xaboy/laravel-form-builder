@@ -17,6 +17,7 @@
 laravel专用表单生成器，快速生成现代化的form表单。包含复选框、单选框、输入框、下拉选择框等元素以及省市区三级联动、时间选择、日期选择、颜色选择、树型、文件/图片上传等功能。
 </p>
 
+#### 支持laravel 5.
 
 #### 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！
  
@@ -46,23 +47,33 @@ $ composer require xaboy/laravel-form-builder
 3. 模板引入依赖文件
 
     这行的作用是引入编辑器需要的 css,js 等文件，所以你不需要再手动去引入它们。
+    
     如果项目中已包含`vue`、`iview`、`jquery`其中任意,可在`vendor/form-builder/assets.blade.php`文件中移除。
+    
     **注意 iview版本为2.14.3,vue版本为2.5**
     ```php
     @include('vendor.form-builder.assets')
     ```
+    
 4. 加载表单规则
+
     ```php
     //@include('vendor.form-builder.script',['form'=>$form,'id'=>'store']);
     @include('vendor.form-builder.script',['form'=>$form]);
     ```
 
 5. 表单初始化
+
     表单会自动加载`csrf_token`,无需手动设置
     ```html
     <script>
         //laravelFormCreate_store('.panel-body');
-        laravelFormCreate('.panel-body');
+        laravelFormCreate('.panel-body',function callback(status, res, $f, formData){
+           if(!status)
+               //TODO 提交成功
+            else
+               //TODO 提交失败
+       });
     </script>
     
     ```
