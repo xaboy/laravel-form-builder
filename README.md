@@ -24,13 +24,57 @@ laravel专用表单生成器，快速生成现代化的form表单。包含复选
 
 
 ## 安装
-`composer require xaboy/laravel-form-builder`
+
+```shell
+$ composer require xaboy/laravel-form-builder
+```
 
 ## 配置
-**1. 添加下面一行到 config/app.php 中 providers 部分：**
-`LaravelFormBuilder\FormBuilderProvider::class,`
-**2. 发布配置文件与资源：**
-`$ php artisan vendor:publish --provider='LaravelFormBuilder\FormBuilderProvider'`
+
+1. 添加下面一行到 `config/app.php` 中 `providers` 部分：
+
+    ```php
+    LaravelFormBuilder\FormBuilderProvider::class,
+    ```
+
+2. 发布配置文件与资源
+
+    ```php
+    $ php artisan vendor:publish --provider='LaravelFormBuilder\FormBuilderProvider'
+    ```
+
+3. 模板引入依赖文件
+
+    这行的作用是引入编辑器需要的 css,js 等文件，所以你不需要再手动去引入它们。
+    如果项目中已包含`vue`、`iview`、`jquery`其中任意,可在`vendor/form-builder/assets.blade.php`文件中移除。
+    **注意 iview版本为2.14.3,vue版本为2.5**
+    ```php
+    @include('vendor.form-builder.assets')
+    ```
+4. 加载表单规则
+    ```php
+    //@include('vendor.form-builder.script',['form'=>$form,'id'=>'store']);
+    @include('vendor.form-builder.script',['form'=>$form]);
+    ```
+
+5. 表单初始化
+    表单会自动加载`csrf_token`,无需手动设置
+    ```html
+    <script>
+        //laravelFormCreate_store('.panel-body');
+        laravelFormCreate('.panel-body');
+    </script>
+    
+    ```
+
+# 说明
+
+1. 5.4+ 请不要忘记 `php artisan storage:link`
+1. 如果你使用的是 laravel 5.3 以下版本，请先创建软链接：
+    ```shell
+    # 请在项目根目录执行以下命令
+    $ ln -s `pwd`/storage/app/public `pwd`/public/storage
+    ```
 
 ## 示例
 
@@ -42,7 +86,7 @@ laravel专用表单生成器，快速生成现代化的form表单。包含复选
 ```php
 
 namespace Test;
-use FormBuilder\Form;
+use LaravelFormBuilder\Form;
 
 //input组件
 $input = Form::input('goods_name','商品名称');
@@ -83,7 +127,7 @@ echo $html;
 
 
 ## AJAX请求返回
-`namespace \FormBuilder\Json`
+`namespace \LaravelFormBuilder\Json`
 
 * **Json::succ(msg,data = [])** 表单提交成功
 * **Json::fail(errorMsg,data = [])** 表单提交失败
@@ -91,7 +135,7 @@ echo $html;
 * **Json::uploadFail(errorMsg)** 文件/图片上传失败
 
 ## Form 表单生成类
-`namespace \FormBuilder\Form`
+`namespace \LaravelFormBuilder\Form`
 
 * **components(array $components = [])** 批量添加组件
 * **formRow(Row $row)** 设置表单Row规则
@@ -161,7 +205,7 @@ echo $html;
 * **validate(array $validate)** 添加验证规则
 
 ## 组件
-`namespace \FormBuilder\Form`
+`namespace \LaravelFormBuilder\Form`
 
 ####  多级联动组件
 * **Form::cascader** 多级联动组件,value为array类型
@@ -423,9 +467,10 @@ echo $html;
 ```
 
 ## 所有组件生成效果
-![https://raw.githubusercontent.com/xaboy/form-builder/master/images/components.png](https://raw.githubusercontent.com/xaboy/form-builder/master/images/components.png)
+![https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/images/components.png](https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/images/components.png)
 
 ## 参考
 
 * **ui框架:** [iview2.x](http://v2.iviewui.com/docs/guide/install)
 * **js表单生成器生成:** [form-create](https://github.com/xaboy/form-create)
+* **php通用版生成器生成:** [form-builder](https://github.com/xaboy/form-builder)
