@@ -7,7 +7,6 @@
 
 namespace LaravelFormBuilder;
 
-use FormBuilder\Form;
 use Illuminate\Support\ServiceProvider;
 
 class FormBuilderProvider extends ServiceProvider
@@ -23,7 +22,7 @@ class FormBuilderProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/views','form-builder');
 
         $this->publishes([
-           __DIR__.'/view' => base_path('resources/views/vendor/form-builder')
+           __DIR__.'/views' => base_path('resources/views/vendor/form-builder')
         ], 'resources');
         $this->publishes([
             __DIR__.'/assets/form-create' => public_path('vendor/form-create')
@@ -37,8 +36,8 @@ class FormBuilderProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind([
-            Form::class
-        ]);
+        $this->app->bind(
+            'LaravelFormBuilder\Form'
+        );
     }
 }

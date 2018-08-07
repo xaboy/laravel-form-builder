@@ -6,10 +6,10 @@ window.laravelFormBuilder = function (options) {
             }
         }
     });
-    vm = new Vue;
+    var vm = new Vue;
     return function create(el, callback) {
         if (!el) el = document.body;
-        return formCreate.create(options.rule, {
+        var $f =  formCreate.create(options.rule, {
             el: el,
             form: options.form,
             row: options.row,
@@ -59,5 +59,7 @@ window.laravelFormBuilder = function (options) {
                 });
             }
         });
+
+        return $f;
     };
-}();
+};
