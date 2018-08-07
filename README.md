@@ -44,11 +44,11 @@ $ composer require xaboy/laravel-form-builder
     $ php artisan vendor:publish --provider='LaravelFormBuilder\FormBuilderProvider'
     ```
 
-3. 模板引入依赖文件
+3. 模板引入依赖资源
 
     这行的作用是引入编辑器需要的 css,js 等文件，所以你不需要再手动去引入它们。
     
-    如果项目中已包含`vue`、`iview`、`jquery`其中任意,可在`vendor/form-builder/assets.blade.php`文件中移除。
+    如果项目中已包含`vue`、`iview`、`jquery`其中任意,可在`vendor/form-builder/assets.blade.php`文件中手动移除。
     
     **注意 iview版本为2.14.3,vue版本为2.5**
     ```php
@@ -64,15 +64,16 @@ $ composer require xaboy/laravel-form-builder
 
 5. 表单初始化
 
-    表单会自动加载`csrf_token`,无需手动设置
+    表单会自动添加`csrf_token`,无需手动设置
     ```html
     <script>
         //laravelFormCreate_store('.panel-body');
         laravelFormCreate('.panel-body',function callback(status, res, $f, formData){
+         //表单提交回调函数
            if(!status)
-               //TODO 提交成功
+               //TODO 表单提交成功
             else
-               //TODO 提交失败
+               //TODO 表单提交失败
        });
     </script>
     
@@ -137,7 +138,7 @@ echo $html;
 ```
 
 
-## AJAX请求返回
+## AJAX请求返回类
 `namespace \LaravelFormBuilder\Json`
 
 * **Json::succ(msg,data = [])** 表单提交成功
