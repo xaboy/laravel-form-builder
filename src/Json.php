@@ -11,9 +11,9 @@ namespace LaravelFormBuilder;
 class Json extends \FormBuilder\Json
 {
     /**
-     * @param $code
+     * @param        $code
      * @param string $msg
-     * @param array $data
+     * @param array  $data
      * @return \Illuminate\Http\JsonResponse
      */
     protected static function result($code, $msg = 'ok', $data = [])

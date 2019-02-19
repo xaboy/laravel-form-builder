@@ -17,7 +17,7 @@
 laravel专用表单生成器，快速生成现代化的form表单。包含复选框、单选框、输入框、下拉选择框等元素以及省市区三级联动、时间选择、日期选择、颜色选择、树型、文件/图片上传等功能。
 </p>
 
-#### 支持laravel 5.
+#### 支持laravel 5.x
 
 #### 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！
  
@@ -91,8 +91,6 @@ $ composer require xaboy/laravel-form-builder
 ## 示例
 
 ![https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg](https://raw.githubusercontent.com/xaboy/laravel-form-builder/master/demo.jpg)
-
-**当form提交成功后会调用`window.formCreate.formSuccess(res,$f,formData)`作为回调方法**
 
 ## 代码
 ```php
