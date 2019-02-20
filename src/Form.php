@@ -6,11 +6,8 @@
  */
 
 namespace LaravelFormBuilder;
-
-
 class Form extends \FormBuilder\Form
 {
-
     /**
      * Form constructor.
      *
@@ -30,13 +27,13 @@ class Form extends \FormBuilder\Form
     protected function init()
     {
         $this->script = [
-            'jq' => asset('vendor/form-create/jquery.js'),
-            'vue' => asset('vendor/form-create/vue/vue.min.js'),
-            'iview-css' => asset('vendor/form-create/iview/styles/iview.css'),
-            'iview' => asset('vendor/form-create/iview/iview.min.js'),
-            'form-create' => asset('vendor/form-create/form-create.min.js'),
-            'city-data' => asset('vendor/form-create/province_city.js'),
-            'city-area-data' => asset('vendor/form-create/province_city_area.js')
+            'jq' => '<script src="' . asset('vendor/form-create/jquery.js') . '"></script>',
+            'vue' => '<script src="' . asset('vendor/form-create/vue/vue.min.js') . '"></script>',
+            'iview-css' => '<link href="' . asset('vendor/form-create/iview/styles/iview.css') . '" rel="stylesheet">',
+            'iview' => '<script src="' . asset('vendor/form-create/iview/iview.min.js') . '"></script>',
+            'form-create' => '<script src="' . asset('vendor/form-create/form-create.min.js') . '"></script>',
+            'city-data' => '<script src="' . asset('vendor/form-create/province_city.js') . '"></script>',
+            'city-area-data' => '<script src="' . asset('vendor/form-create/province_city_area.js') . '"></script>',
         ];
     }
 
@@ -48,6 +45,6 @@ class Form extends \FormBuilder\Form
      */
     public static function create($action, array $components = [], $token = true)
     {
-        return self::create($action, $components, $token);
+        return new self($action, $components, $token);
     }
 }
